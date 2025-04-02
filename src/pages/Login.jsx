@@ -1,23 +1,32 @@
-import React, { useState } from "react";
+import React, { useState,useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../services/api";
+import NavbarWithoutLogin from "../components/NavbarWithoutLogin";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      navigate("/search-scammer");
+    }
+  });
+  
 
   const handleLogin = async () => {
     try {
       const { data } = await API.post("auth/login", { email, password });
       localStorage.setItem("token", data.token);
-      navigate("/search");
+      navigate("/search-scammer");
     } catch (err) {
       alert("Invalid credentials");
     }
   };
 
   return (
+    <>
+    <NavbarWithoutLogin/>
     <div className="min-h-screen flex items-center justify-center text-gray-900">
       <div className="bg-white shadow-lg rounded-lg p-8 sm:p-12 w-full max-w-md border border-green-500 border-2">
         <div className="text-center">
@@ -71,7 +80,9 @@ const Login = () => {
         </div>
       </div>
     </div>
+    </>
   );
+
 };
 
 export default Login;

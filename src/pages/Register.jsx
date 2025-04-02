@@ -1,23 +1,46 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../services/api";
+import NavbarWithoutLogin from "../components/NavbarWithoutLogin";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const Register = () => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  useEffect(() => {
+      if (localStorage.getItem("token")) {
+        navigate("/search-scammer");
+      }
+    });
 
-  const handleRegister = async () => {
-    try {
-      await API.post("auth/register", { email, password });
-      alert("Registration successful! Please log in.");
-      navigate("/login");
-    } catch (err) {
-      alert("Error registering user.");
-    }
+    const handleRegister = async () => {
+      try {
+          const response = await fetch(`${API_URL}/api/auth/register`, {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json"
+              },
+              body: JSON.stringify({ name, email, password })
+          });
+  
+          if (response.ok) {
+              alert("Registration successful! Please log in.");
+              navigate("/login");
+          } else {
+              const errorData = await response.json(); // Try to get error message
+              alert(errorData.message || "Error registering user.");
+          }
+      } catch (err) {
+          alert("Network error. Please try again.");
+      }
   };
+  
 
   return (
+    <>
+    <NavbarWithoutLogin/>
     <div className="min-h-screen flex items-center justify-center text-gray-900">
       <div className="bg-white shadow-lg rounded-lg p-8 sm:p-12 w-full max-w-md  border border-green-500 border-2">
         <div className="text-center">
@@ -33,6 +56,15 @@ const Register = () => {
           }}
           className="mt-8"
         >
+          <div className="mb-6">
+            <input
+              type="name"
+              placeholder="Name"
+              className="w-full px-4 py-3 border rounded-lg bg-gray-100 focus:ring-2 focus:ring-blue-400 focus:outline-none text-sm"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
           <div className="mb-6">
             <input
               type="email"
@@ -71,6 +103,7 @@ const Register = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

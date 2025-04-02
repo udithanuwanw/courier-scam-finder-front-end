@@ -11,7 +11,7 @@ import NavbarWithoutLogin from "./components/NavbarWithoutLogin";
 const App = () => {
   return (
     <Router>
-      <NavbarWithoutLogin/>
+      
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />

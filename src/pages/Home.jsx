@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import NavbarWithoutLogin from "../components/NavbarWithoutLogin";
 
 
 const Home = () => {
@@ -10,6 +11,8 @@ const Home = () => {
   };
 
   return (
+    <>
+    <NavbarWithoutLogin/>
     <div className="min-h-screen bg-gradient-to-r from-green-400 to-blue-500 flex items-center justify-center text-gray-900">
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col lg:flex-row items-center justify-center gap-8">
@@ -40,6 +43,7 @@ const Home = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
