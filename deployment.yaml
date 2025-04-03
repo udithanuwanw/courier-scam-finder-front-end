@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployfrontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: react-frontend
+  template:
+    metadata:
+      name:  react-frontend
+      labels:
+        name: react-frontend
+    spec:
+      containers:
+      - name: react-frontend
+        image: udithanuwan/react-frontend:latest   # replace with your Docker-image pushed on Dockerhub
+        ports:
+        - containerPort: 80

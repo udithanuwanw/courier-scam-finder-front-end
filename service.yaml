@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: react-frontend-service
+spec:
+  type: LoadBalancer  # 🔥 Change from NodePort to LoadBalancer
+  selector:
+    name: react-frontend
+  ports:
+    - port: 80        # External port (for public access)
+      targetPort: 80 # Container’s port (Nginx serves the app on 80)
