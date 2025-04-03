@@ -1,0 +1,15 @@
+version: '3'
+services:
+  backend:
+    image: udithanuwan/aspnet-backend:latest
+    container_name: backend
+    ports:
+      - "5000:8080"
+  
+  frontend:
+    image: udithanuwan/react-frontend:latest
+    container_name: frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
