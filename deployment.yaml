@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: deployfrontend
+  name: react-frontend
 spec:
   replicas: 1
   selector:
